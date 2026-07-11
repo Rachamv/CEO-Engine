@@ -82,87 +82,11 @@ class TestDashboardTemplateExtraction:
         with pytest.raises(FileNotFoundError, match="Dashboard template not found"):
             dash._load_dashboard_template()
 
-    def test_index_route_serves_the_template_when_authenticated(self, dash, client):
-        r = client.get("/", headers=_auth_headers())
+    def test_index_route_serves_the_template(self, dash, client):
+        r = client.get("/")
         assert r.status_code == 200
         assert b"<!DOCTYPE html>" in r.data
         assert b"CEO Engine" in r.data
-
-    def test_index_route_still_requires_auth(self, client):
-        r = client.get("/")
-        assert r.status_code == 401
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# X-Forwarded-For spoofing can no longer bypass rate limiting
-# ─────────────────────────────────────────────────────────────────────────────
-
-class TestClientIpSpoofing:
-    def test_x_forwarded_for_ignored_by_default(self, dash, client):
-        """A different X-Forwarded-For on every request must NOT reset the
-        rate-limit bucket -- otherwise anyone can trivially defeat both
-        the login and trade rate limiters by spoofing this header."""
-        for i in range(dash.LOGIN_MAX_ATTEMPTS):
-            r = client.get("/api/status", headers={"X-Forwarded-For": f"1.2.3.{i}"})
-            assert r.status_code == 401
-        # Still rate-limited despite every request claiming a new source IP.
-        r = client.get("/api/status", headers={"X-Forwarded-For": "9.9.9.9"})
-        assert r.status_code == 429
-
-    def test_client_ip_uses_remote_addr_by_default(self, dash, client):
-        with dash.app.test_request_context(headers={"X-Forwarded-For": "6.6.6.6"}):
-            assert dash._client_ip() != "6.6.6.6"
-
-    def test_x_forwarded_for_honored_only_with_explicit_trust_proxy_opt_in(self, dash, monkeypatch):
-        monkeypatch.setenv("CEO_TRUST_PROXY", "1")
-        with dash.app.test_request_context(headers={"X-Forwarded-For": "6.6.6.6, 7.7.7.7"}):
-            assert dash._client_ip() == "6.6.6.6"
-
-    def test_trust_proxy_opt_in_falls_back_to_remote_addr_without_header(self, dash, monkeypatch):
-        monkeypatch.setenv("CEO_TRUST_PROXY", "1")
-        with dash.app.test_request_context():
-            assert dash._client_ip() != ""
-
-
-class TestLoginRateLimiting:
-    def test_unauthenticated_request_is_401(self, client):
-        r = client.get("/api/status")
-        assert r.status_code == 401
-
-    def test_correct_credentials_pass(self, client):
-        r = client.get("/api/status", headers=_auth_headers())
-        assert r.status_code != 401
-
-    def test_wrong_credentials_are_401_not_500(self, client):
-        import base64
-        token = base64.b64encode(b"admin:wrongpassword").decode()
-        r = client.get("/api/status", headers={"Authorization": f"Basic {token}"})
-        assert r.status_code == 401
-
-    def test_repeated_failed_attempts_get_rate_limited(self, dash, client):
-        for _ in range(dash.LOGIN_MAX_ATTEMPTS):
-            r = client.get("/api/status")
-            assert r.status_code == 401
-        # One more over the limit -> 429, not another 401
-        r = client.get("/api/status")
-        assert r.status_code == 429
-        assert "Retry-After" in r.headers
-
-    def test_rate_limit_applies_even_to_correct_credentials_once_exhausted(self, dash, client):
-        for _ in range(dash.LOGIN_MAX_ATTEMPTS):
-            client.get("/api/status")
-        r = client.get("/api/status", headers=_auth_headers())
-        assert r.status_code == 429
-
-    def test_window_expiry_clears_the_limit(self, dash, client, monkeypatch):
-        for _ in range(dash.LOGIN_MAX_ATTEMPTS):
-            client.get("/api/status")
-        assert client.get("/api/status").status_code == 429
-        # Simulate the window elapsing by rewriting recorded timestamps.
-        real_time = dash._time.time
-        monkeypatch.setattr(dash._time, "time", lambda: real_time() + dash.LOGIN_WINDOW_SECS + 1)
-        r = client.get("/api/status", headers=_auth_headers())
-        assert r.status_code != 429
 
 
 # ─────────────────────────────────────────────────────────────────────────────

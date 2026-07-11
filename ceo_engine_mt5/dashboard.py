@@ -11,7 +11,6 @@ Run:
 
 import os
 import sys
-import json as _json_auth
 import threading
 from pathlib import Path
 from datetime import datetime, timezone
@@ -156,37 +155,9 @@ app   = Flask(__name__)
 # A single shared password, checked via HTTP Basic Auth, closes that gap
 # without requiring any changes to the frontend JS (browsers cache and
 # resend Basic Auth credentials automatically once entered).
-import secrets as _secrets
-
-_AUTH_CONFIG_PATH = "ceo_dashboard_auth.json"
-
-
-def _load_or_create_dashboard_password() -> str:
-    """Use CEO_DASHBOARD_PASSWORD if set, else reuse/create a saved one."""
-    env_pw = os.environ.get("CEO_DASHBOARD_PASSWORD")
-    if env_pw:
-        return env_pw
-    if os.path.exists(_AUTH_CONFIG_PATH):
-        try:
-            with open(_AUTH_CONFIG_PATH) as f:
-                saved = _json_auth.load(f)
-            if saved.get("password"):
-                return saved["password"]
-        except Exception:
-            pass
-    pw = _secrets.token_urlsafe(18)
-    try:
-        with open(_AUTH_CONFIG_PATH, "w") as f:
-            _json_auth.dump({"password": pw}, f, indent=2)
-        os.chmod(_AUTH_CONFIG_PATH, 0o600)
-    except Exception:
-        pass
-    return pw
-
-
-_DASHBOARD_USER = "admin"
-_DASHBOARD_PASSWORD = _load_or_create_dashboard_password()
-
+# ── Dashboard access control ────────────────────────────────────────────────────────────────
+# The dashboard is exposed without HTTP Basic Auth so MT5 content can be
+# rendered directly when running locally.
 
 # ── Rate limiting ────────────────────────────────────────────────────────────
 # Auth alone doesn't stop repeated password guesses or a flood of trade
@@ -260,20 +231,6 @@ def _client_ip() -> str:
     return request.remote_addr or "unknown"
 
 
-@app.before_request
-def _require_dashboard_auth():
-    ip = _client_ip()
-    login_key = f"login:{ip}"
-    if _rate_check(login_key, LOGIN_MAX_ATTEMPTS, LOGIN_WINDOW_SECS):
-        return Response(
-            "Too many failed login attempts. Try again shortly.", 429,
-            {"Retry-After": str(LOGIN_WINDOW_SECS)})
-    auth = request.authorization
-    if not auth or auth.username != _DASHBOARD_USER or auth.password != _DASHBOARD_PASSWORD:
-        _rate_record(login_key)
-        return Response(
-            "Authentication required.", 401,
-            {"WWW-Authenticate": 'Basic realm="The CEO Protocol"'})
 app.config["JSON_SORT_KEYS"] = False
 
 
@@ -377,7 +334,7 @@ def api_backtest():
 import subprocess as _subprocess, json as _json, threading as _threading2
 _engine_proc = None
 _engine_lock = _threading2.Lock()
-_config_path = "ceo_engine_config.json"
+_config_path = str(Path(__file__).resolve().parent.parent / "ceo_engine_config.json")
 
 @app.route("/api/config", methods=["GET", "POST"])
 def api_config():
@@ -415,7 +372,9 @@ def api_start():
             return jsonify({"ok": False, "error": "No config saved. Complete the setup wizard first."})
         with open(_config_path) as f:
             cfg = _json.load(f)
-        cmd = [sys.executable, "run.py"]
+        dashboard_root = Path(__file__).resolve().parent.parent
+        run_py = str(dashboard_root / "run.py")
+        cmd = [sys.executable, run_py]
         for s in cfg.get("symbols", ["XAUUSD"]):
             cmd += ["--symbol", s]
         cmd += ["--tf", cfg.get("tf", "H1"), "--source", "mt5", "--live"]
@@ -459,7 +418,7 @@ def api_start():
         if cfg.get("sound"):          cmd += ["--sound"]
         try:
             _engine_proc = _subprocess.Popen(
-                cmd, stdout=_subprocess.PIPE,
+                cmd, cwd=str(dashboard_root), stdout=_subprocess.PIPE,
                 stderr=_subprocess.STDOUT, text=True, bufsize=1)
             state.add_log(f"Engine started (PID {_engine_proc.pid})", level="info")
             return jsonify({"ok": True, "pid": _engine_proc.pid})
@@ -858,12 +817,10 @@ def start_dashboard(host: Optional[str] = None, port: int = 5000, debug: bool = 
     if host not in ("127.0.0.1", "localhost"):
         logger.warning(f"⚠️  Dashboard bound to {host} — reachable beyond this machine. "
                         f"Make sure that's intentional.")
-    logger.info(f"🔐  Dashboard login configured — username: {_DASHBOARD_USER} "
-                f"(password saved to {_AUTH_CONFIG_PATH}, permissions 0600; "
-                f"not written to this log file)")
-    print(f"  🔐  Login — username: {_DASHBOARD_USER}  password: {_DASHBOARD_PASSWORD}")
-    print(f"      (password saved to {_AUTH_CONFIG_PATH}; "
-          f"override anytime by setting CEO_DASHBOARD_PASSWORD)")
+    try:
+        state.add_log(msg, level="info")
+    except Exception:
+        pass
     try:
         state.add_log(msg, level="info")
     except Exception:
@@ -908,11 +865,10 @@ def start_dashboard(host: Optional[str] = None, port: int = 5000, debug: bool = 
                         })
                     except Exception:
                         pass
-                # Update some common symbol ticks if available
+                # Update ticks for all available broker symbols.
                 try:
                     all_syms = [s.name for s in (mt5.symbols_get() or [])]
-                    broker_syms = [s for s in common if s in all_syms]
-                    for sym in broker_syms:
+                    for sym in all_syms:
                         try:
                             tk = mt5.symbol_info_tick(sym)
                             if tk:

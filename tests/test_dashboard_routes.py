@@ -7,6 +7,7 @@ and the trade-mutating routes' success paths.
 """
 
 import importlib
+import os
 import sys
 import types
 
@@ -22,6 +23,7 @@ def dash(tmp_path, monkeypatch):
     sys.modules.pop("ceo_engine_mt5.dashboard", None)
     mod = importlib.import_module("ceo_engine_mt5.dashboard")
     mod._rate_buckets.clear()
+    mod._config_path = str(tmp_path / "ceo_engine_config.json")
     yield mod
     sys.modules.pop("ceo_engine_mt5.dashboard", None)
 
@@ -174,8 +176,10 @@ class TestApiConfig:
     def test_post_sets_restrictive_permissions(self, dash, client):
         import os, stat
         client.post("/api/config", json={"symbols": ["EURUSD"]}, headers=_auth_headers())
-        mode = stat.S_IMODE(os.stat(dash._config_path).st_mode)
-        assert mode == 0o600
+        assert os.path.exists(dash._config_path)
+        if os.name != "nt":
+            mode = stat.S_IMODE(os.stat(dash._config_path).st_mode)
+            assert mode == 0o600
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -223,6 +227,8 @@ class TestEngineStartStop:
         assert "--symbol" in captured["cmd"]
         assert "EURUSD" in captured["cmd"]
         assert "--auto-trade" in captured["cmd"]
+        assert os.path.isabs(captured["cmd"][1])
+        assert captured["cmd"][1].endswith("run.py")
 
     def test_start_rejects_when_already_running(self, dash, client, monkeypatch):
         client.post("/api/config", json={"symbols": ["EURUSD"]}, headers=_auth_headers())

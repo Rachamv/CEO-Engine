@@ -101,6 +101,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;col
 .mw-hdr strong{font-size:11px;}
 .mwclock{font-family:var(--mono);font-size:11px;color:var(--muted);}
 .mw-wrap{overflow-y:auto;flex:1;min-height:0;}
+.mw-search-row{padding:8px 10px;border-bottom:1px solid var(--border);background:var(--bg);}
+.mw-search-row input{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;color:var(--text);}
+.mw-search-row input:focus{outline:none;border-color:var(--orange);}
 table.mw{width:100%;border-collapse:collapse;font-size:12px;}
 table.mw thead th{position:sticky;top:0;background:var(--bg);padding:5px 9px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--dim);border-bottom:1px solid var(--border);}
 table.mw td{padding:5px 9px;border-bottom:1px solid var(--border2);cursor:pointer;}
@@ -121,12 +124,15 @@ table.mw tbody tr.sel td span{color:#fff!important;}
 .chart-bar{display:flex;align-items:center;gap:8px;padding:4px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;font-size:11px;}
 .chart-bar strong{font-size:12px;}
 .ohlc{font-family:var(--mono);font-size:11px;margin-left:auto;}
-.chart-area{flex:1;position:relative;overflow:hidden;}
-#lwc-container{width:100%;height:100%;}
-.chart-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:30px;background:var(--surface);}
-.chart-empty-lbl{position:absolute;top:10px;left:12px;font-family:var(--mono);font-size:11px;color:var(--muted);}
-.ph-row{display:flex;align-items:flex-end;gap:4px;}
-.phc{display:flex;flex-direction:column;align-items:center;}
+.chart-area{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(15,17,23,.06);}
+#lwc-container{flex:1;min-height:0;width:100%;height:100%;position:relative;z-index:0;}
+.chart-legacy{position:absolute;inset:0;display:none;z-index:0;}
+.chart-legacy iframe{width:100%;height:100%;border:0;display:block;}
+.chart-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;background:var(--surface);z-index:1;text-align:center;}
+.chart-empty-lbl{font-family:var(--mono);font-size:14px;color:var(--muted);padding:16px 18px;letter-spacing:.02em;}
+.chart-empty-desc{font-size:12px;color:var(--dim);max-width:340px;line-height:1.6;padding:0 18px 16px;text-align:center;}
+.ph-row{display:none;}
+.phc{display:none;}
 
 /* bottom */
 .bottom{height:var(--bottom);border-top:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;background:var(--surface);}
@@ -391,7 +397,7 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
     <div class="info-box" id="wiz-summary"></div>
     <div class="wbtns">
       <button class="wbtn wbtn-ghost" onclick="wizGo(2)">← Back</button>
-      <button class="wbtn wbtn-green" onclick="saveAndStart()">💾 Save & Start Engine</button>
+      <button class="wbtn wbtn-green" onclick="saveWizardSettings()">💾 Save Settings</button>
     </div>
   </div>
 </div>
@@ -455,10 +461,10 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
       <div class="help-def">Open the actual MetaTrader 5 desktop terminal first and log into your broker there — this dashboard connects to that running terminal, it doesn't log in independently. Then retry Detect in Setup.</div></div>
     <div class="help-entry" data-help="telegram alerts not arriving test token chat id"><div class="help-term">Telegram alerts not arriving</div>
       <div class="help-def">Use the "Test" button in Settings to check your token/chat ID immediately. If "Find Chat ID" returns nothing, send your bot any message first — Telegram only reports chats it has heard from.</div></div>
-    <div class="help-entry" data-help="engine wont start no config saved"><div class="help-term">Engine won't start / "No config saved"</div>
-      <div class="help-def">Complete and save the Setup wizard (or Settings panel) at least once before starting the engine — it reads its configuration from that saved file.</div></div>
+    <div class="help-entry" data-help="engine wont start no config saved"><div class="help-term">Dashboard requires saved settings</div>
+      <div class="help-def">Complete and save the Setup wizard (or Settings panel) at least once before using the dashboard. It reads its configuration from that saved file.</div></div>
     <div class="help-entry" data-help="chart empty no data blank"><div class="help-term">Chart looks empty</div>
-      <div class="help-def">The engine needs to be running and to have processed at least one bar close for the symbol/timeframe you're viewing. Newly added symbols populate on their next bar close, not instantly.</div></div>
+      <div class="help-def">Live market data appears once MT5 is connected and the dashboard has received at least one recent price update for that symbol/timeframe.</div></div>
     <div class="help-entry" data-help="dashboard password login auth"><div class="help-term">Dashboard password</div>
       <div class="help-def">Auto-generated and printed once to your terminal/console when the engine starts. It's also saved to ceo_dashboard_auth.json in the project folder — check there if you missed the console output.</div></div>
   </div>
@@ -470,6 +476,27 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
 </div>
 </div>
 
+<div class="overlay hidden" id="trade-overlay">
+  <div class="modal">
+    <h2>Manual Trade</h2>
+    <div class="sub">Place a manual BUY or SELL order through the connected MT5 executor.</div>
+    <div class="frow"><label>Symbol</label><input id="trade-sym" type="text" placeholder="XAUUSD"></div>
+    <div class="frow"><label>Direction</label><select id="trade-direction"><option value="long">BUY</option><option value="short">SELL</option></select></div>
+    <div class="frow"><label>Timeframe</label><input id="trade-tf" type="text" readonly></div>
+    <div class="frow"><label>Entry</label><input id="trade-entry" type="number" step="0.00001" placeholder="Entry price"></div>
+    <div class="frow"><label>Stop Loss</label><input id="trade-sl" type="number" step="0.00001" placeholder="Stop loss"></div>
+    <div class="frow"><label>Take Profit 1</label><input id="trade-tp1" type="number" step="0.00001" placeholder="TP1"></div>
+    <div class="frow"><label>Take Profit 2</label><input id="trade-tp2" type="number" step="0.00001" placeholder="TP2 (optional)"></div>
+    <div class="frow"><label>Take Profit 3</label><input id="trade-tp3" type="number" step="0.00001" placeholder="TP3 (optional)"></div>
+    <div class="frow"><label>Quality</label><input id="trade-quality" type="number" min="1" max="100" value="70"></div>
+    <div id="trade-message" style="font-size:12px;color:var(--red);min-height:18px;margin-bottom:10px"></div>
+    <div class="wbtns">
+      <button id="trade-submit" class="wbtn wbtn-primary" onclick="submitManualTrade()">Place Trade</button>
+      <button class="wbtn wbtn-ghost" onclick="closeManualTrade()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- topbar -->
 
 <div class="topbar">
@@ -478,8 +505,8 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
     <span class="brand-v">v3.1</span>
   </div>
   <div class="topbar-r">
-    <button class="eng-btn eng-stopped" id="eng-btn" onclick="toggleEngine()">▶ Start Engine</button>
-    <span class="eng-status" id="eng-status">Engine stopped — click Start or complete Setup</span>
+    <button class="eng-btn eng-stopped" id="eng-btn" onclick="openManualTrade()">+ Trade</button>
+    <span class="eng-status" id="eng-status">Manual trade ready — click +Trade or ⚙ Setup</span>
     <div class="sep"></div>
     <div id="sym-tabs" style="display:flex;gap:3px;flex-shrink:0;"></div>
     <div class="sep"></div>
@@ -530,6 +557,9 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
       <span class="mwclock" id="mwclock">--:--:--</span>
     </div>
     <div class="mw-wrap">
+      <div class="mw-search-row">
+        <input id="mw-search" type="text" placeholder="Search symbols…" oninput="setMarketFilter(this.value)">
+      </div>
       <table class="mw">
         <thead><tr><th>Symbol</th><th>Bid</th><th>Ask</th><th>Change</th><th>Sig</th></tr></thead>
         <tbody id="mw-body"><tr><td colspan="5" style="padding:12px;color:var(--dim);text-align:center">Waiting for data…</td></tr></tbody>
@@ -559,9 +589,13 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
     <div class="chart-area">
       <div class="chart-empty" id="chart-empty">
         <div class="chart-empty-lbl">Select a symbol from Market Watch to load chart</div>
+        <div class="chart-empty-desc">Click a row on the left to view live candles and structure overlays.</div>
         <div class="ph-row" id="ph-candles"></div>
       </div>
       <div id="lwc-container"></div>
+      <div class="chart-legacy" id="chart-legacy">
+        <iframe id="chart-legacy-frame" frameborder="0" allowtransparency="true"></iframe>
+      </div>
     </div>
 
     <!-- bottom tabs -->
@@ -581,7 +615,7 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
         <!-- Signals -->
         <div class="bpanel active" id="panel-signals">
           <div class="sig-wrap" id="sig-wrap">
-            <div class="emr">Engine not running — start the engine to receive signals.</div>
+            <div class="emr">No signals yet — save your settings, open MT5, and wait for the engine to detect setups.</div>
           </div>
         </div>
 
@@ -847,7 +881,7 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
             <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid var(--border);background:var(--bg);position:sticky;bottom:0">
               <button class="set-btn set-btn-primary" onclick="saveSettings()">💾 Save Settings</button>
               <button class="set-btn" onclick="loadSettings()">↺ Reload</button>
-              <span id="settings-save-msg" style="font-size:12px;color:var(--green);display:none">✅ Saved — restart engine to apply</span>
+              <span id="settings-save-msg" style="font-size:12px;color:var(--green);display:none">✅ Saved.</span>
             </div>
           </div>
         </div>
@@ -868,6 +902,7 @@ const barC=p=>p>70?'var(--red)':p>40?'#d97706':'var(--green)';
 let lwcChart=null, cSeries=null, vSeries=null;
 let activeSymbol=null, activeTf='H1';
 let _prevBid={}, _signals=[], _trades=[], _engineRunning=false;
+let mwFilter='';
 let _wizChips={symbols:[],sessions:['london','new_york']};
 
 // ── Lightweight Charts init ───────────────────────────────────────────────────
@@ -902,7 +937,11 @@ async function loadChart(sym,tf){
   const descs={XAUUSD:'Gold/USD',GBPUSD:'GBP/USD',EURUSD:'EUR/USD',USDJPY:'USD/JPY',XAUUSDT:'Gold Tether'};
   $('chart-desc').textContent=descs[sym]||sym;
   $('chart-empty').style.display='none';
+  $('chart-empty').style.zIndex='0';
   $('lwc-container').style.display='block';
+  $('lwc-container').style.zIndex='1';
+  $('chart-legacy').style.display='none';
+  $('chart-legacy').style.zIndex='0';
   document.querySelectorAll('#sym-tabs .ctab').forEach(b=>b.classList.toggle('active',b.dataset.sym===sym));
   document.querySelectorAll('#mw-body tr[data-sym]').forEach(r=>r.classList.toggle('sel',r.dataset.sym===sym));
   const bars=await fetch(`/api/candles/${sym}/${tf}`).then(r=>r.json()).catch(()=>[]);
@@ -912,6 +951,24 @@ async function loadChart(sym,tf){
     lwcChart.timeScale().fitContent();
     drawTradeLevels(sym);
     loadStructure(sym,tf);
+    $('chart-empty').style.display='none';
+    $('chart-empty').style.zIndex='0';
+    $('lwc-container').style.display='block';
+    $('lwc-container').style.zIndex='1';
+    $('chart-legacy').style.display='none';
+  } else {
+    cSeries.setData([]);
+    vSeries.setData([]);
+    $('chart-empty-text').textContent = `Checking chart data for ${sym} ${tf}…`;
+    $('chart-empty-detail').textContent = 'If live bars are unavailable, a legacy chart may still render below.';
+    $('chart-empty').style.display='flex';
+    $('chart-empty').style.zIndex='1';
+    $('lwc-container').style.display='none';
+    $('lwc-container').style.zIndex='0';
+    const url = `/api/chart/${encodeURIComponent(sym)}/${encodeURIComponent(tf)}`;
+    $('chart-legacy-frame').src = url;
+    $('chart-legacy').style.display='block';
+    $('chart-legacy').style.zIndex='0';
   }
 }
 
@@ -1109,14 +1166,14 @@ function buildWizSummary(){
   const syms=_wizChips.symbols.join(', ')||'none';
   const sess=_wizChips.sessions.join(', ')||'all';
   const tf=$('w-tf').value, risk=$('w-risk').value, exec=$('w-exec').value;
-  $('wiz-summary').innerHTML=`✅ Ready to start:<br>
+  $('wiz-summary').innerHTML=`✅ Ready to save settings:<br>
     <strong>Symbols:</strong> ${syms} &nbsp;|&nbsp;
     <strong>TF:</strong> ${tf} &nbsp;|&nbsp;
     <strong>Sessions:</strong> ${sess}<br>
     <strong>Risk:</strong> ${risk}% per trade &nbsp;|&nbsp;
     <strong>Mode:</strong> ${exec==='auto'?'Auto-execute':'Signals only'}`;
 }
-async function saveAndStart(){
+async function saveWizardSettings(){
   const acctType=$('w-acct-type').value;
   const cfg={
     symbols: _wizChips.symbols.length?_wizChips.symbols:['XAUUSD'],
@@ -1140,7 +1197,8 @@ async function saveAndStart(){
   };
   await fetch('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(cfg)});
   closeWizard();
-  await startEngine();
+  $('settings-save-msg').style.display = 'inline';
+  setTimeout(()=>{$('settings-save-msg').style.display='none';}, 2500);
 }
 function openWizard(){
   // pre-fill from saved config
@@ -1201,37 +1259,78 @@ function filterHelp(query){
   $('help-empty').style.display = visibleCount === 0 ? 'block' : 'none';
 }
 
-// ── engine control ────────────────────────────────────────────────────────────
-async function startEngine(){
-  const r=await fetch('/api/start',{method:'POST'}).then(x=>x.json()).catch(e=>({ok:false,error:String(e)}));
-  if(r.ok){
-    _engineRunning=true; updateEngineUI();
-  } else {
-    alert('Could not start engine:\n'+r.error);
+function openManualTrade(){
+  const overlay=$('trade-overlay');
+  const symbol = activeSymbol || (_signals[0] && _signals[0].symbol) || 'XAUUSD';
+  $('trade-sym').value = symbol;
+  $('trade-direction').value = 'long';
+  $('trade-tf').value = activeTf;
+  $('trade-entry').value = '';
+  $('trade-sl').value = '';
+  $('trade-tp1').value = '';
+  $('trade-tp2').value = '';
+  $('trade-tp3').value = '';
+  $('trade-quality').value = '70';
+  $('trade-message').textContent = '';
+  overlay.classList.remove('hidden');
+}
+function closeManualTrade(){
+  $('trade-overlay').classList.add('hidden');
+}
+async function submitManualTrade(){
+  const submit = $('trade-submit');
+  const message = $('trade-message');
+  const symbol = $('trade-sym').value.trim().toUpperCase();
+  const direction = $('trade-direction').value;
+  const entry = parseFloat($('trade-entry').value);
+  const sl = parseFloat($('trade-sl').value);
+  const tp1 = parseFloat($('trade-tp1').value);
+  const tp2 = parseFloat($('trade-tp2').value) || tp1;
+  const tp3 = parseFloat($('trade-tp3').value) || tp1;
+  const quality = parseInt($('trade-quality').value) || 70;
+  const tf = $('trade-tf').value || activeTf;
+
+  if(!symbol || !direction || Number.isNaN(entry) || Number.isNaN(sl) || Number.isNaN(tp1)){
+    message.style.color = 'var(--red)';
+    message.textContent = 'Symbol, entry, stop loss and TP1 are required.';
+    return;
   }
-}
-async function stopEngine(){
-  const r=await fetch('/api/stop',{method:'POST'}).then(x=>x.json()).catch(e=>({ok:false,error:String(e)}));
-  _engineRunning=false; updateEngineUI();
-}
-async function toggleEngine(){
-  const status=await fetch('/api/engine_status').then(r=>r.json()).catch(()=>({running:false}));
-  if(status.running) await stopEngine(); else {
-    // Check if config exists first
-    const cfg=await fetch('/api/config').then(r=>r.json()).catch(()=>({}));
-    if(!cfg.symbols||!cfg.symbols.length){openWizard();return;}
-    await startEngine();
+
+  submit.disabled = true;
+  submit.textContent = 'Placing…';
+  message.textContent = '';
+
+  try {
+    const r = await fetch('/api/trade', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        symbol, direction, entry, sl,
+        tp1, tp2, tp3, quality,
+        model: 'manual', tf, atr: 0,
+      })
+    }).then(x=>x.json());
+
+    if(r.ok){
+      message.style.color = 'var(--green)';
+      message.textContent = `Trade placed: #${r.ticket}`;
+      setTimeout(()=>{ closeManualTrade(); submit.disabled=false; submit.textContent='Place Trade'; }, 1400);
+    } else {
+      message.style.color = 'var(--red)';
+      message.textContent = '⚠ ' + (r.error || 'Trade failed');
+      submit.disabled = false;
+      submit.textContent = 'Place Trade';
+    }
+  } catch(e){
+    message.style.color = 'var(--red)';
+    message.textContent = '⚠ ' + String(e);
+    submit.disabled = false;
+    submit.textContent = 'Place Trade';
   }
 }
 function updateEngineUI(){
   const btn=$('eng-btn');
-  if(_engineRunning){
-    btn.className='eng-btn eng-running';
-    btn.textContent='⬛ Stop Engine';
-  } else {
-    btn.className='eng-btn eng-stopped';
-    btn.textContent='▶ Start Engine';
-  }
+  btn.className='eng-btn eng-stopped';
+  btn.textContent = '+ Trade';
 }
 // poll engine status every 5s
 async function pollEngineStatus(){
@@ -1239,18 +1338,32 @@ async function pollEngineStatus(){
   if(s.running!==_engineRunning){_engineRunning=s.running;updateEngineUI();}
   $('eng-status').innerHTML=_engineRunning
     ?`Running — PID <span class="mono">${s.pid}</span>`
-    :'Engine stopped — click ▶ Start Engine or ⚙ Setup';
+    :'MT5 manual trades need a connected engine. Open MT5 and save settings in Setup.';
 }
 
 // ── market watch (driven by live MT5 ticks + signals) ─────────────────────────
+function setMarketFilter(value){
+  mwFilter = (value||'').trim().toUpperCase();
+  renderMW(_signals, _prevTicks||{});
+}
+
 function renderMW(signals, ticks){
   const body=$('mw-body');
   // build symbol list: unique from signals + any tick keys
   const symSet=new Set([...signals.map(s=>s.symbol),...Object.keys(ticks)]);
-  if(!symSet.size){body.innerHTML='<tr><td colspan="5" style="padding:12px;color:var(--dim);text-align:center">Waiting for data…</td></tr>';return;}
+  const filtered = [...symSet].filter(sym => !mwFilter || sym.toUpperCase().includes(mwFilter));
+  if(!symSet.size){
+    body.innerHTML='<tr><td colspan="5" style="padding:12px;color:var(--dim);text-align:center">Waiting for data…</td></tr>';
+    return;
+  }
+  if(!filtered.length){
+    body.innerHTML='<tr><td colspan="5" style="padding:12px;color:var(--dim);text-align:center">No matching symbols</td></tr>';
+    return;
+  }
+  body.innerHTML='';
   const sigMap={};
   signals.forEach(s=>{if(!sigMap[s.symbol]||s.quality>sigMap[s.symbol].quality)sigMap[s.symbol]=s;});
-  symSet.forEach(sym=>{
+  filtered.forEach(sym=>{
     const tk=ticks[sym]||{};
     const sig=sigMap[sym];
     const bid=tk.bid??sig?.entry;
@@ -1560,7 +1673,7 @@ async function tickPnl(){
 
 // ── guard panel ───────────────────────────────────────────────────────────────
 function renderGuard(g){
-  if(!g||!Object.keys(g).length){$('guard-msg').textContent='Engine not running.';return;}
+  if(!g||!Object.keys(g).length){$('guard-msg').textContent='No account health data available.';return;}
   const dl=g.daily_loss_used_pct||0, dd=g.drawdown_used_pct||0;
   const td=g.trading_days_completed||0, tr=g.trading_days_required||1;
   const tlDl=$('tl-dl'),tlDd=$('tl-dd'),tlTd=$('tl-td');
@@ -1701,6 +1814,7 @@ async function refresh(){
   try{
     const d=await fetch('/api/state').then(r=>r.json());
     const ticks=d.market_ticks||{};
+    _prevTicks = ticks;
     renderMW(d.signals||[],ticks);
     renderSymTabs(d.signals||[]);
     renderSignals(d.signals||[]);
