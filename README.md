@@ -43,8 +43,8 @@ closed below.
 
 ```
                        ┌────────────────────────────────────────┐
-                       │              data.py                   │
-                       │  yfinance / ccxt / csv / MT5  → OHLCV  │
+                       │                data.py                   │
+                       │               MT5  → OHLCV  
                        └───────────────────┬────────────────────┘
                                            ▼
                        ┌────────────────────────────────────────┐
@@ -120,8 +120,6 @@ feature you actually use:
 
 | Feature | Extra package | Flag that triggers it |
 |---|---|---|
-| Yahoo Finance data | `yfinance` | `--source yfinance` (default) |
-| Crypto exchange data | `ccxt` | `--source ccxt` |
 | MT5 data / live monitor / auto-trade | `MetaTrader5` (Windows only) | `--source mt5`, `--live`, `--auto-trade` |
 | Static chart PNGs | `matplotlib` | `--ceo-chart` |
 | Interactive equity curve / HTML report | none — CDN-loaded JS (Chart.js) | `--html-report` |
