@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "the-ceo-protocol"
+version = "3.6.0"
+description = "The CEO Protocol — multi-model liquidity-sweep trading system (backtester, MT5 live monitor, optional auto-trading)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Proprietary" }
+authors = [{ name = "Adewunmi" }]
+
+dependencies = [
+    # Ceilings pin to "next major above the current floor" so an untested
+    # future breaking release (e.g. a hypothetical pandas 4.0) can't get
+    # silently pulled in by a fresh install. pandas 3.0.2 and numpy 2.4.4
+    # are what this project's test suite is actually validated against as
+    # of writing, both comfortably inside these ranges.
+    "pandas>=2.0.0,<4.0.0",
+    "numpy>=1.24.0,<3.0.0",
+]
+
+[project.optional-dependencies]
+data = ["yfinance>=0.2.36,<0.3.0", "ccxt>=4.0.0,<5.0.0"]
+mt5 = ["MetaTrader5>=5.0.45,<6.0.0"]
+# matplotlib is the only charting library this project still needs in
+# Python -- it renders the static PNG used for Telegram alerts
+# (chart_png.py). Everything interactive (the live dashboard, the HTML
+# backtest report, the CEO structure chart) is now plain HTML/JS
+# (Chart.js + TradingView Lightweight Charts, both loaded via CDN), so
+# plotly is no longer a dependency of this project at all.
+charts = ["matplotlib>=3.7.0,<4.0.0"]
+live = ["flask>=3.0.0,<4.0.0", "requests>=2.31.0,<3.0.0"]
+dev = [
+    "pytest>=7.4.0,<10.0.0", "pytest-cov>=4.1.0,<5.0.0",
+    "flake8>=6.1.0,<7.0.0", "radon>=6.0.0,<7.0.0",
+]
+installer = [
+    "pyinstaller>=6.0.0,<7.0.0", "pystray>=0.19.0,<0.20.0", "pillow>=10.0.0,<13.0.0",
+]
+all = [
+    "yfinance>=0.2.36,<0.3.0", "ccxt>=4.0.0,<5.0.0", "MetaTrader5>=5.0.45,<6.0.0",
+    "matplotlib>=3.7.0,<4.0.0",
+    "flask>=3.0.0,<4.0.0", "requests>=2.31.0,<3.0.0",
+    "pyinstaller>=6.0.0,<7.0.0", "pystray>=0.19.0,<0.20.0", "pillow>=10.0.0,<13.0.0",
+]
+
+[project.scripts]
+the-ceo-protocol = "ceo_engine_mt5.run:main"
+
+[tool.setuptools]
+packages = ["ceo_engine_mt5"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v"
+# tests/test_run.py does `from run import run`, importing the project-root
+# run.py wrapper script (not ceo_engine_mt5/run.py). That only resolves
+# if the project root is on sys.path -- true for `python -m pytest`
+# (which adds cwd automatically) but NOT for the bare `pytest` console
+# script, which would otherwise fail with ModuleNotFoundError. This is
+# pytest's own documented mechanism for exactly this case, so it works
+# the same way regardless of how the suite gets invoked (bare pytest,
+# python -m pytest, an IDE's test runner, CI, ...).
+pythonpath = ["."]
+
+[tool.radon]
+exclude = "tests/*"

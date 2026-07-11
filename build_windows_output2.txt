@@ -1,0 +1,311 @@
+
+============================================================
+  CEO Engine Build  v3.6.0
+============================================================
+
+[1/4] Installing build dependencies...
+pip 26.1.1 from C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\pip (python 3.14)
+      Using "python"  to install build dependencies...
+Requirement already satisfied: pyinstaller in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (6.21.0)
+Requirement already satisfied: pystray in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (0.19.5)
+Requirement already satisfied: pillow in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (12.3.0)
+Requirement already satisfied: altgraph in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pyinstaller) (0.17.5)
+Requirement already satisfied: packaging>=22.0 in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pyinstaller) (26.2)
+Requirement already satisfied: pefile>=2022.5.30 in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pyinstaller) (2024.8.26)
+Requirement already satisfied: pyinstaller-hooks-contrib>=2026.6 in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pyinstaller) (2026.6)
+Requirement already satisfied: pywin32-ctypes>=0.2.1 in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pyinstaller) (0.2.3)
+Requirement already satisfied: setuptools>=42.0.0 in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pyinstaller) (82.0.1)
+Requirement already satisfied: six in C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages (from pystray) (1.17.0)
+
+[notice] A new release of pip is available: 26.1.1 -> 26.1.2
+[notice] To update, run: C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install --upgrade pip
+      Done.
+[2/4] Cleaning previous build...
+      Removing dist...
+      Removing build...
+      Done.
+[3/4] Bundling with PyInstaller (this takes 2-5 minutes)...
+1025 INFO: PyInstaller: 6.21.0, contrib hooks: 2026.6
+1027 INFO: Python: 3.14.2
+1164 INFO: Platform: Windows-11-10.0.26200-SP0
+1164 INFO: Python environment: C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64
+1173 INFO: Removing temporary files and cleaning cache in C:\Users\racha\AppData\Local\pyinstaller
+1233 INFO: Module search paths (PYTHONPATH):
+['D:\\ceo_engine_mt5',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python314.zip',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\DLLs',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages',
+ 'D:\\ceo_engine_mt5']
+3363 INFO: Appending 'datas' from .spec
+3365 INFO: checking Analysis
+3365 INFO: Building Analysis because Analysis-00.toc is non existent
+3365 INFO: Looking for Python shared library...
+3365 INFO: Using Python shared library: C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\python314.dll
+3366 INFO: Running Analysis Analysis-00.toc
+3366 INFO: Target bytecode optimization level: 0
+3366 INFO: Initializing module dependency graph...
+3370 INFO: Initializing module graph hook caches...
+3459 INFO: Analyzing modules for base_library.zip ...
+9524 INFO: Processing standard module hook 'hook-math.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+9594 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+11104 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+16592 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+17002 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+22001 INFO: Caching module dependency graph...
+22107 INFO: Analyzing D:\ceo_engine_mt5\launcher.py
+22238 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+22426 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+22441 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+23446 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+23470 INFO: SetuptoolsInfo: initializing cached setuptools info...
+26823 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+31619 INFO: Processing standard module hook 'hook-cryptography.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+35695 INFO: hook-cryptography: cryptography does not seem to be using dynamically linked OpenSSL.
+37548 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+40557 INFO: Processing standard module hook 'hook-jinja2.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+45200 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+45203 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_metadata'!
+45252 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+45338 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+45514 INFO: Processing pre-safe-import-module hook 'hook-jaraco.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+45516 INFO: Setuptools: 'jaraco' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco'!
+45562 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+45565 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+46752 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+47975 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+47982 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+48019 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+48021 INFO: Setuptools: 'backports' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.backports'!
+49834 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+49836 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+52202 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+52511 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+52626 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+52629 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.zipp'!
+53033 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+54008 INFO: Processing standard module hook 'hook-urllib3.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+56123 INFO: Processing standard module hook 'hook-certifi.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+56278 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+57044 INFO: Processing standard module hook 'hook-pystray.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+58166 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+58448 INFO: Processing pre-safe-import-module hook 'hook-gi.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\pystray\_util\gtk.py:53: SyntaxWarning: 'return' in a 'finally' block
+  return False
+58516 INFO: Processing standard module hook 'hook-PIL.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+59080 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+60641 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+68114 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+68182 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+68892 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+69917 INFO: Analyzing hidden import 'pandas'
+69934 INFO: Processing standard module hook 'hook-pandas.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+75547 INFO: Processing standard module hook 'hook-zoneinfo.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+81057 INFO: Processing standard module hook 'hook-pandas.io.formats.style.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+90490 INFO: Processing standard module hook 'hook-pandas.plotting.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+90661 INFO: Processing standard module hook 'hook-matplotlib.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+92994 INFO: Processing standard module hook 'hook-matplotlib.backend_bases.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+95693 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+96045 INFO: Processing standard module hook 'hook-matplotlib.pyplot.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+100350 INFO: Processing standard module hook 'hook-dateutil.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+113086 INFO: Processing standard module hook 'hook-pandas.io.clipboard.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+113523 INFO: Processing standard module hook 'hook-xml.dom.domreg.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+114836 INFO: Processing standard module hook 'hook-pytest.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+115741 INFO: Processing standard module hook 'hook-pygments.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+120168 INFO: Processing standard module hook 'hook-py.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+126521 INFO: Analyzing hidden import 'ceo_engine_mt5.run'
+126936 INFO: Processing standard module hook 'hook-pytz.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+129754 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+129807 INFO: Processing standard module hook 'hook-platformdirs.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+130298 INFO: Processing standard module hook 'hook-websockets.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+157616 INFO: Analyzing hidden import 'PIL.ImageDraw'
+157810 INFO: Analyzing hidden import 'plotly'
+157821 INFO: Processing standard module hook 'hook-plotly.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+186184 INFO: Processing module hooks (post-graph stage)...
+232974 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+232981 INFO: Matplotlib backend selection method: automatic discovery of used backends
+233024 INFO: Discovered Matplotlib backend(s) via `matplotlib.use()` call in module 'ceo_engine_mt5.visualise': ['Agg']
+233027 INFO: Discovered Matplotlib backend(s) via `matplotlib.use()` call in module 'ceo_engine_mt5.chart_png': ['Agg']
+233029 INFO: The following Matplotlib backends were discovered by scanning for `matplotlib.use()` calls: ['Agg']. If your backend of choice is not in this list, either add a `matplotlib.use()` call to your code, or configure the backend collection via hook options (see: https://pyinstaller.org/en/stable/hooks-config.html#matplotlib-hooks).
+233030 INFO: Selected matplotlib backends: ['Agg']
+234330 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+240219 INFO: Processing standard module hook 'hook-tzdata.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+241212 INFO: Performing binary vs. data reclassification (1468 entries)
+241486 INFO: Looking for ctypes DLLs
+241742 INFO: Analyzing run-time hooks ...
+241812 INFO: Including run-time hook 'pyi_rth_mplconfig.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+241815 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+241820 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+241839 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+241843 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+241847 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+241859 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+241861 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+242144 INFO: Creating base_library.zip...
+242195 INFO: Looking for dynamic libraries
+249481 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\numpy.libs', 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\pandas.libs']
+249481 INFO: Extra DLL search directories (PATH): []
+251287 INFO: Warnings written to D:\ceo_engine_mt5\build\ceo_engine\warn-ceo_engine.txt
+253344 INFO: Graph cross-reference written to D:\ceo_engine_mt5\build\ceo_engine\xref-ceo_engine.html
+254286 INFO: checking PYZ
+254286 INFO: Building PYZ because PYZ-00.toc is non existent
+254286 INFO: Building PYZ (ZlibArchive) D:\ceo_engine_mt5\build\ceo_engine\PYZ-00.pyz
+259628 INFO: Building PYZ (ZlibArchive) D:\ceo_engine_mt5\build\ceo_engine\PYZ-00.pyz completed successfully.
+260417 INFO: checking PKG
+260417 INFO: Building PKG because PKG-00.toc is non existent
+260417 INFO: Building PKG (CArchive) CEOEngine.pkg
+260527 INFO: Building PKG (CArchive) CEOEngine.pkg completed successfully.
+260532 INFO: Bootloader C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+260532 INFO: checking EXE
+260532 INFO: Building EXE because EXE-00.toc is non existent
+260532 INFO: Building EXE from EXE-00.toc
+260532 INFO: Copying bootloader EXE to D:\ceo_engine_mt5\build\ceo_engine\CEOEngine.exe
+260623 INFO: Copying icon to EXE
+260701 INFO: Copying 0 resources to EXE
+260701 INFO: Embedding manifest in EXE
+260777 INFO: Appending PKG archive to EXE
+260954 INFO: Fixing EXE headers
+261720 INFO: Building EXE from EXE-00.toc completed successfully.
+261723 INFO: Module search paths (PYTHONPATH):
+['D:\\ceo_engine_mt5',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python314.zip',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\DLLs',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64',
+ 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages',
+ 'D:\\ceo_engine_mt5',
+ 'D:\\ceo_engine_mt5']
+262567 INFO: Appending 'datas' from .spec
+262568 INFO: checking Analysis
+262568 INFO: Building Analysis because Analysis-01.toc is non existent
+262568 INFO: Looking for Python shared library...
+262568 INFO: Using Python shared library: C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\python314.dll
+262568 INFO: Running Analysis Analysis-01.toc
+262568 INFO: Target bytecode optimization level: 0
+262568 INFO: Reusing cached module dependency graph...
+262609 INFO: Initializing module graph hook caches...
+262649 INFO: Analyzing D:\ceo_engine_mt5\run.py
+262714 INFO: Processing standard module hook 'hook-pandas.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+265669 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+265783 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+265800 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+265878 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+266342 INFO: Processing standard module hook 'hook-math.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+266480 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+266802 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+267489 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+267600 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+271350 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+272329 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+274739 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+274890 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+277230 INFO: Processing standard module hook 'hook-zoneinfo.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+282062 INFO: Processing standard module hook 'hook-pandas.io.formats.style.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+289332 INFO: Processing standard module hook 'hook-pandas.plotting.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+289566 INFO: Processing standard module hook 'hook-matplotlib.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+290562 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+290936 INFO: Processing pre-safe-import-module hook 'hook-gi.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+291696 INFO: Processing standard module hook 'hook-matplotlib.backend_bases.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+292184 INFO: Processing standard module hook 'hook-PIL.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+292745 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+293738 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+293810 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+294419 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+297325 INFO: Processing standard module hook 'hook-jinja2.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+299256 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+299634 INFO: Processing standard module hook 'hook-matplotlib.pyplot.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+302517 INFO: Processing standard module hook 'hook-dateutil.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+302917 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+306694 INFO: Processing standard module hook 'hook-certifi.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+312680 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+313551 INFO: Processing standard module hook 'hook-pandas.io.clipboard.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+314074 INFO: Processing standard module hook 'hook-xml.dom.domreg.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+315714 INFO: Processing standard module hook 'hook-pytest.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+316234 INFO: Processing standard module hook 'hook-pygments.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+319508 INFO: Processing standard module hook 'hook-py.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+320682 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+320683 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+320704 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+320745 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+320843 INFO: Processing pre-safe-import-module hook 'hook-jaraco.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+320844 INFO: Setuptools: 'jaraco' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco'!
+320876 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+320877 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+322129 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+322133 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+322157 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+322158 INFO: Setuptools: 'backports' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.backports'!
+322669 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+322670 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_metadata'!
+322753 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+322819 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+322820 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.zipp'!
+326009 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+330920 INFO: Processing standard module hook 'hook-pytz.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+331924 INFO: Processing standard module hook 'hook-urllib3.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+333525 INFO: Processing standard module hook 'hook-cryptography.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+335077 INFO: hook-cryptography: cryptography does not seem to be using dynamically linked OpenSSL.
+336916 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+336953 INFO: Processing standard module hook 'hook-platformdirs.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+337285 INFO: Processing standard module hook 'hook-websockets.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+369800 INFO: Analyzing hidden import 'pystray'
+369807 INFO: Processing standard module hook 'hook-pystray.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\pystray\_util\gtk.py:53: SyntaxWarning: 'return' in a 'finally' block
+  return False
+370530 INFO: Analyzing hidden import 'PIL.ImageDraw'
+370743 INFO: Analyzing hidden import 'plotly'
+370753 INFO: Processing standard module hook 'hook-plotly.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+400259 INFO: Processing module hooks (post-graph stage)...
+455351 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+455354 INFO: Matplotlib backend selection method: automatic discovery of used backends
+455410 INFO: Discovered Matplotlib backend(s) via `matplotlib.use()` call in module 'ceo_engine_mt5.visualise': ['Agg']
+455415 INFO: Discovered Matplotlib backend(s) via `matplotlib.use()` call in module 'ceo_engine_mt5.chart_png': ['Agg']
+455415 INFO: The following Matplotlib backends were discovered by scanning for `matplotlib.use()` calls: ['Agg']. If your backend of choice is not in this list, either add a `matplotlib.use()` call to your code, or configure the backend collection via hook options (see: https://pyinstaller.org/en/stable/hooks-config.html#matplotlib-hooks).
+455415 INFO: Selected matplotlib backends: ['Agg']
+457100 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+464964 INFO: Processing standard module hook 'hook-tzdata.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+466196 INFO: Performing binary vs. data reclassification (1468 entries)
+466569 INFO: Looking for ctypes DLLs
+466878 INFO: Analyzing run-time hooks ...
+466963 INFO: Including run-time hook 'pyi_rth_mplconfig.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+466968 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+466972 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+466996 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+467001 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+467008 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+467019 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+467022 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+467435 INFO: Creating base_library.zip...
+467512 INFO: Looking for dynamic libraries
+475767 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\numpy.libs', 'C:\\Users\\racha\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\pandas.libs']
+475767 INFO: Extra DLL search directories (PATH): []
+477830 INFO: Warnings written to D:\ceo_engine_mt5\build\ceo_engine\warn-ceo_engine.txt
+480052 INFO: Graph cross-reference written to D:\ceo_engine_mt5\build\ceo_engine\xref-ceo_engine.html
+481129 INFO: checking PYZ
+481129 INFO: Building PYZ because PYZ-01.toc is non existent
+481129 INFO: Building PYZ (ZlibArchive) D:\ceo_engine_mt5\build\ceo_engine\PYZ-01.pyz
+487299 INFO: Building PYZ (ZlibArchive) D:\ceo_engine_mt5\build\ceo_engine\PYZ-01.pyz completed successfully.
+488257 INFO: checking PKG
+488257 INFO: Building PKG because PKG-01.toc is non existent
+488257 INFO: Building PKG (CArchive) ceo-run.pkg
+488384 INFO: Building PKG (CArchive) ceo-run.pkg completed successfully.
+488386 INFO: Bootloader C:\Users\racha\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\run.exe
+488386 INFO: checking EXE
+488386 INFO: Building EXE because EXE-01.toc is non existent
+488386 INFO: Building EXE from EXE-01.toc
+488386 INFO: Copying bootloader EXE to D:\ceo_engine_mt5\build\ceo_engine\ceo-run.exe
+488488 INFO: Copying icon to EXE
+488584 INFO: Copying 0 resources to EXE
+488585 INFO: Embedding manifest in EXE
+488672 INFO: Appending PKG archive to EXE
+488868 INFO: Fixing EXE headers
+489682 INFO: Building EXE from EXE-01.toc completed successfully.
+489750 INFO: checking COLLECT
+489750 INFO: Building COLLECT because COLLECT-00.toc is non existent
+489750 INFO: Building COLLECT COLLECT-00.toc
+489752 WARNING: Ignoring non-existent resource D:\ceo_engine_mt5\build\ceo_engine\CEOEngine.exe, meant to be collected as CEOEngine.exe
+493458 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+493572 INFO: Build complete! The results are available in: D:\ceo_engine_mt5\dist
+ERROR: CEOEngine.exe not found in dist\CEOEngine after build.
+Press any key to continue . . . 

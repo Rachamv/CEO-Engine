@@ -1,0 +1,106 @@
+name: Tests
+
+# Runs the test suite on every push/PR so the 463 tests built up over this
+# project's security/correctness hardening work actually gate merges,
+# instead of relying on someone remembering to run `pytest` by hand.
+#
+# Not covered here: MetaTrader5-dependent code paths (mt5_connect.py,
+# the live trade-execution branches in executor.py) -- MetaTrader5 only
+# ships wheels for Windows, and this workflow runs on ubuntu-latest.
+# Those paths are covered in the test suite itself via a fake mt5 module
+# injected at import time (see tests/test_executor_broker_confirmation.py),
+# which is the only way to exercise them without a real MT5 terminal
+# regardless of what CI runner this used.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: pytest (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.9 is the floor declared in pyproject.toml's requires-python;
+        # 3.11+ is where pandas 3.x actually ships wheels (3.9/3.10 will
+        # resolve to pandas 2.x instead, which is intentionally still
+        # inside the <4.0.0 ceiling) -- this matrix exercises both
+        # pandas major lines, not just whichever one happens to be
+        # newest at any given time.
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install the package with test-relevant extras
+        # dev    -> pytest, pytest-cov
+        # live   -> flask, requests (dashboard.py imports these unconditionally)
+        # charts -> matplotlib (chart.py imports chart_png.py unconditionally)
+        # Deliberately NOT installing the mt5/data/installer extras --
+        # MetaTrader5 has no Linux wheel at all (see workflow docstring
+        # above), and yfinance/ccxt/pyinstaller/pystray aren't needed to
+        # run the test suite.
+        run: pip install -e ".[dev,live,charts]"
+
+      - name: Run tests
+        # Either `pytest` or `python -m pytest` works here -- pyproject.toml's
+        # [tool.pytest.ini_options] pythonpath=["."] setting is what actually
+        # makes tests/test_run.py's `from run import run` resolve regardless
+        # of invocation style (bare pytest doesn't add cwd to sys.path the
+        # way `python -m pytest` does; confirmed this the hard way while
+        # writing this workflow). `python -m pytest` kept anyway as a second,
+        # independent safety net.
+        run: python -m pytest --cov=ceo_engine_mt5 --cov-report=term-missing --cov-report=xml
+
+      - name: Upload coverage report
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
+          retention-days: 14
+
+  lint:
+    name: Lint (informational — does not block merges)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install lint tools
+        run: pip install flake8 radon
+
+      - name: flake8
+        # continue-on-error: this codebase leans on aligned "=" signs in
+        # keyword arguments as a deliberate readability convention
+        # throughout (e.g. `symbol      = data.get("symbol")`), which
+        # PEP8/flake8 flags (E221/E251) even though it's intentional
+        # style, not a bug. ~3,100 such findings exist today -- making
+        # this blocking would fail CI on day one over formatting choices
+        # rather than real problems. Tightening this (either by adopting
+        # a formatter like black, or by codifying the aligned style in a
+        # per-project flake8 config) is a reasonable follow-up once
+        # that's a deliberate decision rather than a side effect of
+        # turning CI on.
+        continue-on-error: true
+        run: flake8 --max-line-length=120 --extend-ignore=E501,W503,E203 ceo_engine_mt5/ --statistics
+
+      - name: radon (cyclomatic complexity)
+        continue-on-error: true
+        run: radon cc ceo_engine_mt5/ -a -nc
