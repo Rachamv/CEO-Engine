@@ -64,21 +64,21 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;col
 #halt-strip{display:none;background:var(--red);color:#fff;font-weight:700;text-align:center;padding:7px;font-size:12px;letter-spacing:.04em;flex-shrink:0;}
 
 /* topbar */
-.topbar{height:var(--top);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:stretch;flex-shrink:0;}
-.brand{width:var(--left);background:var(--orange);display:flex;align-items:center;gap:10px;padding:0 16px;border-right:1px solid var(--orange-dk);flex-shrink:0;}
-.brand span{font-size:19px;font-weight:800;color:#fff;letter-spacing:.05em;}
-.brand-v{background:rgba(255,255,255,.22);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
-.topbar-r{flex:1;display:flex;align-items:center;padding:0 14px;gap:8px;overflow:hidden;}
-.eng-btn{display:flex;align-items:center;gap:6px;padding:7px 15px;border-radius:7px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font);transition:all .18s;border:none;white-space:nowrap;}
-.eng-running{background:var(--red-lt);color:var(--red);border:1.5px solid #fca5a5;}
-.eng-stopped{background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(5,150,105,.3);}
-.eng-status{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sep{width:1px;height:22px;background:var(--border);flex-shrink:0;margin:0 2px;}
-.ctab{padding:4px 9px;border-radius:4px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;}
+.topbar{height:var(--top);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;flex-shrink:0;box-shadow:0 5px 18px rgba(15,23,42,.06);}
+.brand{width:var(--left);background:var(--orange);display:flex;align-items:center;gap:10px;padding:0 18px;border-right:1px solid var(--orange-dk);flex-shrink:0;}
+.brand span{font-size:18px;font-weight:800;color:#fff;letter-spacing:.05em;}
+.brand-v{background:rgba(255,255,255,.22);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;}
+.topbar-r{flex:1;display:flex;align-items:center;padding:0 18px;gap:10px;overflow:hidden;}
+.eng-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font);transition:all .18s;border:none;white-space:nowrap;box-shadow:0 6px 18px rgba(15,23,42,.08);}
+.eng-running{background:var(--green);color:#fff;}
+.eng-stopped{background:var(--red-lt);color:var(--red);border:1px solid #fca5a5;}
+.eng-status{font-size:11px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--blue-lt);color:var(--blue);font-size:11px;font-weight:700;border:1px solid rgba(30,110,200,.18);}
+.ctab{padding:4px 9px;border-radius:5px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;}
 .ctab.active{background:var(--orange);border-color:var(--orange-dk);color:#fff;}
-.tfb{padding:3px 7px;border-radius:3px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;}
+.tfb{padding:5px 10px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;}
 .tfb.active{background:var(--orange);color:#fff;}
-.set-btn{margin-left:auto;padding:5px 11px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.set-btn{margin-left:auto;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
 
 /* main */
 .main{flex:1;display:flex;overflow:hidden;}
@@ -260,14 +260,6 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
         <div style="font-weight:700;color:var(--green-dk);margin-bottom:6px">✅ MT5 terminal detected — logged in automatically</div>
         <div id="mt5-account-summary" style="font-size:12px;color:var(--text);line-height:1.8;font-family:monospace"></div>
       </div>
-      <div class="frow"><label>Account Type</label>
-        <select id="w-acct-type" onchange="onAcctTypeChange()">
-          <option value="demo">Demo / Practice</option>
-          <option value="personal">Personal live account</option>
-          <option value="prop">Prop firm funded account</option>
-        </select>
-        <span class="fhint">The engine detected your account type. Change if incorrect.</span>
-      </div>
     </div>
 
     <!-- Shown when MT5 NOT detected — manual entry fallback -->
@@ -286,12 +278,17 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
       <div class="frow"><label>Broker Server (optional)</label>
         <input type="text" id="w-server" placeholder="e.g. ICMarkets-Live">
         <span class="fhint">Find this in MT5 → File → Open Account.</span></div>
-      <div class="frow"><label>Account Type</label>
-        <select id="w-acct-type" onchange="onAcctTypeChange()">
-          <option value="demo">Demo / Practice</option>
-          <option value="personal">Personal live account</option>
-          <option value="prop">Prop firm funded account</option>
-        </select></div>
+    </div>
+
+    <!-- Shared account type selector for both paths -->
+    <div class="frow" style="margin-top:10px">
+      <label>Account Type</label>
+      <select id="w-acct-type" onchange="onAcctTypeChange()">
+        <option value="demo">Demo / Practice</option>
+        <option value="personal">Personal live account</option>
+        <option value="prop">Prop firm funded account</option>
+      </select>
+      <span class="fhint">Choose the account type that matches your MT5 login.</span>
     </div>
 
     <!-- Prop firm extra fields — shown for both paths -->
@@ -506,7 +503,7 @@ table.tt tbody tr:nth-child(even) td{background:var(--bg);}
   </div>
   <div class="topbar-r">
     <button class="eng-btn eng-stopped" id="eng-btn" onclick="openManualTrade()">+ Trade</button>
-    <span class="eng-status" id="eng-status">Manual trade ready — click +Trade or ⚙ Setup</span>
+    <span class="eng-status status-pill" id="eng-status">Manual trade ready — click +Trade or ⚙ Setup</span>
     <div class="sep"></div>
     <div id="sym-tabs" style="display:flex;gap:3px;flex-shrink:0;"></div>
     <div class="sep"></div>
@@ -1937,7 +1934,6 @@ function collectSettings(){
     mtf_tfs:          $('s-mtf-enable').checked ? mtfTfs : null,
     mtf_mode:         $('s-mtf-mode').value,
     mtf_min_tfs:      parseInt($('s-mtf-min-tfs').value)||2,
-    mtf_min_score:    parseInt($('s-mtf-min-score')?.value)||40,
     min_quality:      parseInt($('s-min-quality').value)||60,
     confluence_mode:  $('s-confluence-mode').value,
     min_consistency:  parseInt($('s-min-consistency').value)||0,
